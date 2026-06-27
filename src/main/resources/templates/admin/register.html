@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>備品登録 | 備品貸出管理システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">新しい備品の登録</h5>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/admin/register}" method="post">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">備品名</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">カテゴリ</label>
+                            <select class="form-select" id="category" name="category">
+                                <option value="PC">PC</option>
+                                <option value="周辺機器">周辺機器</option>
+                                <option value="書籍">書籍</option>
+                                <option value="その他">その他</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="totalQuantity" class="form-label">初期在庫数</label>
+                            <input type="number" class="form-control" id="totalQuantity" name="totalQuantity" min="1" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">登録する</button>
+                    </form>
+                    <div class="mt-3 text-center">
+                        <a href="/items" class="text-decoration-none">← 一覧へ戻る</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
