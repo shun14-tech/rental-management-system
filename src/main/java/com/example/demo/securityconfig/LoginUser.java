@@ -31,9 +31,7 @@ public class LoginUser implements UserDetails{
         return userId;
     }
    
-    public User getUser(){
-        return user;
-    }
+  
 
     @Override
     public String getUsername() {

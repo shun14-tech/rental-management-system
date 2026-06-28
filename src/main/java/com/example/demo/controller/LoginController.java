@@ -13,7 +13,14 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showloginform(){
+         System.out.println("login画面を表示します");
         return "login";
+    }
+
+    @GetMapping("/items")
+    public String showItems(){
+        System.out.println("list画面を表示します");
+        return"items/list";
     }
 
 
