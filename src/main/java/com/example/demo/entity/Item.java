@@ -26,6 +26,7 @@ public class Item {
     }
 
     public String getName(){
+       // System.out.println("itemの名前を取得します");
         return name;
     }
 
