@@ -48,12 +48,12 @@
                 </thead>
                 <tbody>
                     <tr th:each="item : ${items}">
-                        <td th:text="${item.itemId}">1</td>
-                        <td><span class="badge bg-secondary" th:text="${item.category}">PC</span></td>
-                        <td th:text="${item.name}">MacBook Pro</td>
+                        <td th:text="${item.itemId}"></td>
+                        <td><span class="badge bg-secondary" th:text="${item.category}"></span></td>
+                        <td th:text="${item.name}"></td>
                         <td>
                             <span th:classappend="${item.availableQuantity > 0} ? 'text-primary' : 'text-danger fw-bold'"
-                                  th:text="${item.availableQuantity} + ' / ' + ${item.totalQuantity}">5 / 5</span>
+                                  th:text="${item.availableQuantity} + ' / ' + ${item.totalQuantity}"> </span>
                         </td>
                         <td>
                             <a th:href="@{/items/{id}(id=${item.itemId})}" class="btn btn-sm btn-outline-primary">詳細・申請</a>
