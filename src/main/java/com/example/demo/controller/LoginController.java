@@ -1,8 +1,13 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.catalina.startup.ClassLoaderFactory.Repository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Item;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.securityconfig.LoginUser;
 
 @Controller
 public class LoginController {
@@ -83,7 +89,36 @@ public class LoginController {
 
         return "items/detail";
 
+    }
 
+    @PostMapping("/items/{id}/apply")//このidはitemid
+    public String apply(@PathVariable("id") int id, @RequestParam("returnDeadline") String returnDeadline,
+     Model model){
+        System.out.println("applyします");
+          Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+    if (authentication == null) {
+        System.out.println("認証情報が取得できませんでした。");
+    }
+
+
+    Object principal = authentication.getPrincipal();
+    
+    if (principal instanceof LoginUser) {
+        LoginUser userDetails = (LoginUser) principal;
+      // ★ 今日の日付（申請日）を取得
+            LocalDate requestDate = LocalDate.now(); 
+
+            System.out.println("userId: " + userDetails.getUserId() + " username: " + userDetails.getUsername() + " 申請日: " + requestDate + " 返却期限: " + returnDeadline);
+
+            // リポジトリメソッドに申請日も渡すように変更
+            userRepository.request(userDetails.getUserId(), id, requestDate, returnDeadline);
+    }
+
+
+
+
+        return"redirect:/items";
     }
 
 
@@ -94,6 +129,7 @@ public class LoginController {
     @GetMapping("/admin/rentals")
     public String showRentals(){
         System.out.println("レンタル画面を表示します");
+        //  List<Item> itemList=userRepository.findAll();
         return "admin/rentals";
     }
 

@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.DemoApplication;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,6 +71,15 @@ public class UserRepository {
             return Optional.empty();
         }
 
+    }
+
+    public void request(int userId, int itemId, LocalDate requestDate, String returnDeadline) {
+   
+        String sql = "INSERT INTO rentals (user_id, item_id, request_date, return_deadline, status) VALUES (?, ?, ?, ?, 'APPLIED')";
+        
+        System.out.println("insert文を実行します");
+        
+        jdbcTemplate.update(sql, userId, itemId, requestDate, returnDeadline);
     }
 
 }
