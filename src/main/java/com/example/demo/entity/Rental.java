@@ -8,7 +8,7 @@ public class Rental {
    private String requestDate;
    private String returnDeadline;
    private String status;
-  
+
 
    public Rental(String requestDate,String returnDeadline,String status){
       this.requestDate=requestDate;
