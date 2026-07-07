@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.catalina.startup.ClassLoaderFactory.Repository;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Item;
+import com.example.demo.entity.Rental;
+import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.securityconfig.LoginUser;
 
@@ -83,7 +86,7 @@ public class LoginController {
         System.out.println("詳細画面に到達しました");
         
 
-        Optional<Item> item=userRepository.findById(id);
+        Optional<Item> item=userRepository.findByitemId(id);
        // System.out.println(item.get().getName());
        model.addAttribute("item", item.get());
 
@@ -114,22 +117,40 @@ public class LoginController {
             // リポジトリメソッドに申請日も渡すように変更
             userRepository.request(userDetails.getUserId(), id, requestDate, returnDeadline);
     }
-
-
-
-
         return"redirect:/items";
     }
 
-
-
-
-
     //----レンタル画面-----
     @GetMapping("/admin/rentals")
-    public String showRentals(){
+    public String showRentals(Model model){
         System.out.println("レンタル画面を表示します");
         //  List<Item> itemList=userRepository.findAll();
+
+        List<Rental> RentalList=userRepository.findRentalAll();
+         // model.addAttribute("ITEM1",item.get().getName());
+        //  model.addAttribute("items",itemList);
+         
+        for(Rental rental:RentalList){
+            System.out.println("レンタルID:"+rental.getrentalid()+" user_id: "+rental.getUser_id()+" item_id: "+rental.getItem_id()+" request_date: "+rental.getRequestDate());
+           // System.out.println("ユーザー名は:"+rental.getUser().getName());
+            Optional<Item> item=userRepository.findByitemId(rental.getItem_id());
+             model.addAttribute("item",item.get().getName());
+            Optional<User> user=userRepository.findByuserId(rental.getUser_id());
+            model.addAttribute("user",user.get().getName());
+            System.out.println(item.get().getName()+" "+user.get().getName());
+           model.addAttribute("rentals",RentalList);
+            
+
+         //   model.addAttribute("ITEM1",item.get().getName());
+            System.out.println("ITEM1に代入します");
+           
+        }
+    
+ 
+        System.out.println("レンタルに代入します");
+       // model.addAttribute("rentals",RentalList);
+
+
         return "admin/rentals";
     }
 

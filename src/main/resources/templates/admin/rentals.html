@@ -27,23 +27,25 @@
                 </thead>
                 <tbody>
                     <tr th:each="rental : ${rentals}">
-                        <td th:text="${#dates.format(rental.requestDate, 'yyyy/MM/dd')}">2026/06/27</td>
-                        <td th:text="${rental.user.name}">一般 一郎</td>
-                        <td th:text="${rental.item.name}">MacBook Pro</td>
-                        <td th:text="${#dates.format(rental.returnDeadline, 'yyyy/MM/dd')}">2026/07/04</td>
+                      <td th:text="${rental.requestDate}">2026/06/27</td>
+
+                   <td th:text="${user}">一般 一郎</td>
+                      <td th:text="${item}">MacBook Pro</td> 
+                  
+                        <td th:text="${rental.returnDeadline}">2026/07/04</td>
                         <td>
                             <span class="badge bg-warning text-dark" th:if="${rental.status == 'APPLIED'}">申請中</span>
                             <span class="badge bg-primary" th:if="${rental.status == 'RENTED'}">貸出中</span>
                             <span class="badge bg-success" th:if="${rental.status == 'RETURNED'}">返却済</span>
                         </td>
                         <td>
-                            <form th:if="${rental.status == 'APPLIED'}" th:action="@{/admin/rentals/{id}/approve(id=${rental.rentalId})}" method="post" class="d-inline">
+                        <!---  <form th:if="${rental.status == 'APPLIED'}" th:action="@{/admin/rentals/{id}/approve(id=${rental.rentalId})}" method="post" class="d-inline">
                                 <button type="submit" class="btn btn-sm btn-warning">承認する</button>
                             </form>
                             
                             <form th:if="${rental.status == 'RENTED'}" th:action="@{/admin/rentals/{id}/return(id=${rental.rentalId})}" method="post" class="d-inline">
                                 <button type="submit" class="btn btn-sm btn-primary">返却完了</button>
-                            </form>
+                            </form>  -->  
                         </td>
                     </tr>
                 </tbody>
