@@ -29,9 +29,8 @@
                     <tr th:each="rental : ${rentals}">
                       <td th:text="${rental.requestDate}">2026/06/27</td>
 
-                   <td th:text="${user}">一般 一郎</td>
-                      <td th:text="${item}">MacBook Pro</td> 
-                  
+                   <td th:text="${rental.userName}">一般 一郎</td>
+                   <td th:text="${rental.itemName}">MacBook Pro</td>
                         <td th:text="${rental.returnDeadline}">2026/07/04</td>
                         <td>
                             <span class="badge bg-warning text-dark" th:if="${rental.status == 'APPLIED'}">申請中</span>

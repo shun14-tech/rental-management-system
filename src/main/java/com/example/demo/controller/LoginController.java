@@ -130,23 +130,18 @@ public class LoginController {
          // model.addAttribute("ITEM1",item.get().getName());
         //  model.addAttribute("items",itemList);
          
-        for(Rental rental:RentalList){
-            System.out.println("レンタルID:"+rental.getrentalid()+" user_id: "+rental.getUser_id()+" item_id: "+rental.getItem_id()+" request_date: "+rental.getRequestDate());
-           // System.out.println("ユーザー名は:"+rental.getUser().getName());
-            Optional<Item> item=userRepository.findByitemId(rental.getItem_id());
-             model.addAttribute("item",item.get().getName());
-            Optional<User> user=userRepository.findByuserId(rental.getUser_id());
-            model.addAttribute("user",user.get().getName());
-            System.out.println(item.get().getName()+" "+user.get().getName());
-           model.addAttribute("rentals",RentalList);
-            
+     for(Rental rental : RentalList){
+        Optional<Item> item = userRepository.findByitemId(rental.getItem_id());
+        // modelではなく、rentalオブジェクト自体に名前をセットする
+        rental.setItemName(item.get().getName());
+        
+        Optional<User> user = userRepository.findByuserId(rental.getUser_id());
+        // rentalオブジェクト自体に名前をセットする
+        rental.setUserName(user.get().getName());
+    }
 
-         //   model.addAttribute("ITEM1",item.get().getName());
-            System.out.println("ITEM1に代入します");
-           
-        }
-    
- 
+    // ループが終わって、名前が全てセットされたリストを1回だけ渡す
+    model.addAttribute("rentals", RentalList);
         System.out.println("レンタルに代入します");
        // model.addAttribute("rentals",RentalList);
 
